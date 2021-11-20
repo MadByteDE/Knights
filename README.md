@@ -18,7 +18,7 @@ Knights: Quest for Gems is a 2D top-down vs/coop dungeon-crawler game for 1 - 4 
 
 ![](image/preview.png)
 
-This game is based on the original game "Knights" for Amiga, made by Kalle Marjola in 1994.  
+This game is based on the game "Knights" for Amiga, made by Kalle Marjola in 1994.  
 You can find more infos on [his website](https://rpr.kapsi.fi/games/design.shtml#knights).
 
 There's also an open-source PC port (Windows/Linux/Mac) of the original game which can be found at:  
