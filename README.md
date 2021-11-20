@@ -2,7 +2,7 @@
 # Knights: Quest for Gems
 
 <a href="https://love2d.org/">
-         <img alt="LOVE" src="image/loveIcon.png"
+         <img alt="LOVE" src="media/loveIcon.png"
          height="20">
 </a>
 <a href="https://www.gnu.org/licenses/gpl-3.0.txt">
@@ -16,7 +16,7 @@ Knights: Quest for Gems is a 2D top-down vs/coop dungeon-crawler game for 1 - 4 
 
 
 
-![](image/preview.png)
+![](media/preview.png)
 
 This game is based on "Knights" for Amiga, made by Kalle Marjola in 1994.  
 You can find more infos on [his website](https://rpr.kapsi.fi/games/design.shtml#knights).
