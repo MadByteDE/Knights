@@ -11,7 +11,8 @@
 </a>
 
 > :warning: **Work in progress**: The game is not yet in a playable state!
-> 
+
+## Overview 
 Knights: Quest for Gems is a 2D top-down vs/coop dungeon-crawler game for 1 - 4 players.
 
 
