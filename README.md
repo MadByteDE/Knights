@@ -23,3 +23,6 @@ You can find more infos on [his website](https://rpr.kapsi.fi/games/design.shtml
 
 There's also an open-source PC (Windows/Linux/Mac) port of the original game which can be found at:  
 https://www.knightsgame.org.uk/.
+
+## License
+The software is released under the [GNU General Public License (GPL)](https://www.gnu.org/licenses/gpl-3.0.txt) which can be found in the file `COPYING` in the same directory as this file. Information about licenses for individual assets can be found in the `LICENSES` file.
