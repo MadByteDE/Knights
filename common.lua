@@ -9,7 +9,7 @@ function Common.assert(condition, str, ...)
     if not success then
         local str = debug.traceback(ret, 2)
         if Log then
-            Log:error(string)
+            Log:error(str)
         end
         error(str, 2)
     end
