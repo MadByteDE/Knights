@@ -1,5 +1,4 @@
 
-
 local Game = {}
 
 function Game:init()
@@ -12,9 +11,10 @@ function Game:draw()
 end
 
 function Game:keypressed(key)
+    if key == "escape" then love.event.quit() end
 end
 
-function Game:exit()
+function Game:quit()
 end
 
 return Game

@@ -1,8 +1,15 @@
 
+-- Show debug output immediately
+io.stdout:setvbuf("no")
+
 _TITLE          = "Knights"
 _VERSION        = 'v0.0.1'
 _DESCRIPTION    = '2D vs/coop dungeon-crawler for 1 - 4 players'
 _URL            = 'https://github.com/MadByteDE/Knights'
+_DEBUG          = true
+
+Log = require("log").new()
+Common = require("common")
 
 local Game = require("game")
 
@@ -22,6 +29,6 @@ function love.keypressed(key)
     Game:keypressed(key)
 end
 
-function love.exit()
-    Game:exit()
+function love.quit()
+    Game:quit()
 end
