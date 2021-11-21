@@ -1,10 +1,35 @@
 
+-- Knights: Quest for Gems - A 2D top-down vs/coop dungeon-crawler for 1-4 players
+-- Copyright (C) 2021 Lars Loenneker
+
+-- This program is free software; you can redistribute it and/or
+-- modify it under the terms of the GNU General Public License
+-- as published by the Free Software Foundation; either version 3
+-- of the License, or (at your option) any later version.
+
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+
+-- You should have received a copy of the GNU General Public License
+-- along with this program; if not, see https://www.gnu.org/licenses/gpl-3.0.txt.
+
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Log.lua: Logging tool for Knights: Quest for Gems --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 local Log = {}
 Log.__index = Log
 
-local sformat = string.format
+local sformat, unpack, print = string.format, unpack, print
 local fs = love.filesystem
 
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Local functions --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 local function log(Log, status, msg, ...)
     local _, lines = fs.read(Log.filepath):gsub("\n", "")
@@ -23,6 +48,10 @@ local function log(Log, status, msg, ...)
     fs.append(Log.filepath, output.."\n")
 end
 
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Constructor --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function Log.new(dirpath, filename)
     dirpath = dirpath or "logs/"
@@ -48,6 +77,10 @@ function Log.new(dirpath, filename)
     return self
 end
 
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Public functions --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function Log:init()
     local datetime = os.date("%Y-%m-%d %H:%M:%S")

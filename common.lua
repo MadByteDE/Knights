@@ -1,5 +1,31 @@
 
+-- Knights: Quest for Gems - A 2D top-down vs/coop dungeon-crawler for 1-4 players
+-- Copyright (C) 2021 Lars Loenneker
+
+-- This program is free software; you can redistribute it and/or
+-- modify it under the terms of the GNU General Public License
+-- as published by the Free Software Foundation; either version 3
+-- of the License, or (at your option) any later version.
+
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+
+-- You should have received a copy of the GNU General Public License
+-- along with this program; if not, see https://www.gnu.org/licenses/gpl-3.0.txt.
+
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Log.lua: Logging tool for Knights: Quest for Gems --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 local Common = {}
+
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Public functions --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function Common.assert(condition, str, ...)
     local string = string.format(str or "Assertion failed", ...)
@@ -16,8 +42,10 @@ function Common.assert(condition, str, ...)
     return ret
 end
 
+
+-- https://stackoverflow.com/questions/15706270/sort-a-table-in-lua
+
 function Common.spairs(t, order)
-    -- https://stackoverflow.com/questions/15706270/sort-a-table-in-lua
     -- collect the keys
     local keys = {}
     for k in pairs(t) do keys[#keys+1] = k end
