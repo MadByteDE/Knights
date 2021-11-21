@@ -15,8 +15,9 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program; if not, see https://www.gnu.org/licenses/gpl-3.0.txt.
 
--- Show debug output immediately
-io.stdout:setvbuf("no")
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Log.lua: Logging tool for Knights: Quest for Gems --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 _TITLE          = "Knights"
 _VERSION        = 'v0.0.1'
@@ -24,10 +25,20 @@ _DESCRIPTION    = '2D vs/coop dungeon-crawler for 1 - 4 players'
 _URL            = 'https://github.com/MadByteDE/Knights'
 _DEBUG          = true
 
-Log = require("log").new()
-Common = require("common")
+-- Show debug output immediately
+io.stdout:setvbuf("no")
 
+-- Globals
+Log     = require("log").new()
+Common  = require("common")
+
+-- Dependencies
 local Game = require("game")
+
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Callbacks --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function love.load()
     Game:init()
