@@ -16,7 +16,7 @@
 -- along with this program; if not, see https://www.gnu.org/licenses/gpl-3.0.txt.
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- Log.lua: Logging tool for Knights: Quest for Gems --
+-- Knights: Quest for Gems --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 _TITLE          = "Knights"
