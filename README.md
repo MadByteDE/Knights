@@ -5,9 +5,10 @@
          <img alt="LOVE" src="media/loveIcon.png"
          height="20">
 </a>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"  /></a>
 <a href="https://www.gnu.org/licenses/gpl-3.0.txt">
          <img alt="GPL3.0" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/GPL_v3_Blue_Badge.svg/120px-GPL_v3_Blue_Badge.svg.png"
-         height="20">
+         height="16">
 </a>
 
 > :warning: **Work in progress**: The game is not yet in a playable state!
