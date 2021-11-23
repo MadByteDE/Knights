@@ -28,12 +28,15 @@ _DEBUG          = true
 -- Show debug output immediately
 io.stdout:setvbuf("no")
 
--- Globals
-Log     = require("log").new()
-Common  = require("common")
-
 -- Dependencies
-local Game = require("game")
+local utf8      = require("utf8")
+local Log       = require("log")
+local Common    = require("common")
+local Game      = require("game")
+
+-- Create start up message
+local datetime = os.date("%Y-%m-%d - %H:%M:%S")
+Log.info(string.format("%s %s - %s", _TITLE, _VERSION, datetime))
 
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -58,4 +61,50 @@ end
 
 function love.quit()
     Game:quit()
+end
+
+
+-- Error handler
+local function error_printer(msg, layer)
+	Log.write((debug.traceback("\nError: " .. tostring(msg), 1+(layer or 1)):gsub("\n[^\n]+$", "")))
+end
+
+function love.errorhandler(msg)
+	msg = tostring(msg)
+
+	error_printer(msg, 2)
+
+	if not love.window or not love.graphics or not love.event then
+		return
+	end
+
+	if not love.graphics.isCreated() or not love.window.isOpen() then
+		local success, status = pcall(love.window.setMode, 800, 600)
+		if not success or not status then
+			return
+		end
+	end
+
+	-- Reset state
+	if love.mouse then
+		love.mouse.setVisible(true)
+		love.mouse.setGrabbed(false)
+		love.mouse.setRelativeMode(false)
+		if love.mouse.isCursorSupported() then
+			love.mouse.setCursor()
+		end
+	end
+
+	if love.joystick then
+		-- Stop all joystick vibrations.
+		for i,v in ipairs(love.joystick.getJoysticks()) do
+			v:setVibration()
+		end
+	end
+
+	if love.audio then love.audio.stop() end
+
+	love.graphics.reset()
+
+    love.event.quit()
 end

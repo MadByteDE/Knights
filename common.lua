@@ -22,22 +22,28 @@
 
 local Common = {}
 
+-- Dependencies
+local Log = require("log")
+
+local sformat = string.format
+
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- Public functions --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function Common.assert(condition, str, ...)
-    local string = string.format(str or "Assertion failed", ...)
+function Common.assert(condition, msg, ...)
+    msg = sformat(msg or "Assertion failed", ...)
     local success, ret = pcall(function()
-        return assert(condition or false, string)
+        return assert(condition or false, "\n"..msg.."\n")
     end)
     if not success then
-        local str = debug.traceback(ret, 2)
-        if Log then
-            Log:error(str)
-        end
-        error(str, 2)
+        local str_trace = debug.traceback(ret, 2)
+        -- Display the message
+        if Log then Log.write(str_trace)
+        else print(str_trace) end
+        -- Quit the program
+        love.event.quit()
     end
     return ret
 end

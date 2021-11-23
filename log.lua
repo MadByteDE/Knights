@@ -23,7 +23,10 @@
 local Log = {}
 Log.__index = Log
 
-local sformat, unpack, print = string.format, unpack, print
+local DEFAULT_DIRPATH = "logs/"
+local DEFAULT_FILENAME = "latest.log"
+local MESSAGE_TYPES = {"warn", "info", "debug"}
+local sformat, supper, unpack, print = string.format, string.upper, unpack, print
 local fs = love.filesystem
 
 
@@ -31,37 +34,29 @@ local fs = love.filesystem
 -- Local functions --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-local function log(Log, status, msg, ...)
+local function log(status, msg, ...)
+    -- Get amount of lines in the log file
     local _, lines = fs.read(Log.filepath):gsub("\n", "")
-    local table = {
-        lines,
-        status,
-        os.date("%H:%M:%S"),
-        debug.getinfo(2, "Sl").short_src,
-        sformat(msg, unpack({...}))
-    }
-
-    local string = "%s [%s %s] %s: %s"
-    local output = sformat(string, unpack(table))
-    print(output)
-
-    fs.append(Log.filepath, output.."\n")
+    -- Get more infos
+    local header = supper(status) .." ".. os.date("%H:%M:%S")
+    local debuginfo = debug.getinfo(3, "Sl")
+    local src = debuginfo.short_src .." ".. debuginfo.currentline
+    -- Format the string
+    local string = "%s [%s] %s: %s"
+    local output = sformat(string, lines + 1, header, src, sformat(msg, ...))
+    -- Write to log file
+    Log.write(output)
 end
 
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- Constructor --
+-- Public functions --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function Log.new(dirpath, filename)
-    dirpath = dirpath or "logs/"
-    filename = filename or "latest.log"
-
-    local self = setmetatable({
-        filename = filename,
-        dirpath = dirpath,
-        filepath = dirpath .. filename,
-    }, Log)
+function Log:init(dirpath, filename)
+    self.dirpath = dirpath or DEFAULT_DIRPATH
+    self.filename = filename or DEFAULT_FILENAME
+    self.filepath = self.dirpath .. self.filename
 
     -- Create directory if needed
     if not fs.getInfo(self.dirpath) then
@@ -71,47 +66,31 @@ function Log.new(dirpath, filename)
         end
     end
 
-    -- initialize / write start up message
-    self:init()
+    -- Create methods for all message types
+    for _, type in pairs(MESSAGE_TYPES) do
+        self[type] = function(msg, ...)
+            log(type, msg, ...)
+        end
+    end
 
-    return self
-end
+    -- Create the log file
+    self.file = fs.write(self.filepath, "")
 
-
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- Public functions --
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-function Log:init()
-    local datetime = os.date("%Y-%m-%d %H:%M:%S")
-    local startup_string = sformat("%s %s - %s\n", _TITLE, _VERSION, datetime)
+    -- Print where the file has been created
     local absolute_path = fs.getSaveDirectory() .."/".. self.filepath
-
-    -- Create a new file with a start up message
-    self.file = fs.write(self.filepath, startup_string)
-
-    -- Push inital path info message
-    self:info("Created log file at '%s'", absolute_path)
+    print(sformat("Created log file at '%s'", absolute_path))
 end
 
 
-function Log:info(msg, ...)
-    log(self, "INFO", msg, ...)
+function Log.write(msg)
+    -- Show message in console
+    print(msg)
+    -- Write to file
+    fs.append(Log.filepath, msg.."\n")
 end
 
 
-function Log:warning(msg, ...)
-    log(self, "WARN", msg, ...)
-end
-
-
-function Log:error(msg, ...)
-    log(self, "ERROR", msg, ...)
-end
-
-
-function Log:debug(msg, ...)
-    if _DEBUG then log(self, "DEBUG", msg, ...) end
-end
+-- Init itself
+Log:init()
 
 return Log
