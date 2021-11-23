@@ -29,7 +29,6 @@ _DEBUG          = true
 io.stdout:setvbuf("no")
 
 -- Dependencies
-local utf8      = require("utf8")
 local Log       = require("log")
 local Common    = require("common")
 local Game      = require("game")
