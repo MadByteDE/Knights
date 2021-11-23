@@ -38,10 +38,10 @@ function Common.assert(condition, msg, ...)
         return assert(condition or false, "\n"..msg.."\n")
     end)
     if not success then
-        local str_trace = debug.traceback(ret, 2)
+        local output = debug.traceback(ret, 2)
         -- Display the message
-        if Log then Log.write(str_trace)
-        else print(str_trace) end
+        if Log then Log.write(output)
+        else print(output) end
         -- Quit the program
         love.event.quit()
     end
