@@ -115,7 +115,6 @@ end
 function Layer:iterate(f)
     for y = 0, self.tileshigh-1 do
         for x = 0, self.tileswide-1 do
-        print(x..", "..y)
         local tile = self.tilearray[y][x]
         f(tile, x, y)
         end

@@ -23,6 +23,8 @@
 local Common = {}
 
 -- Dependencies
+local Log = require("log")
+
 local sformat = string.format
 
 

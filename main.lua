@@ -30,12 +30,12 @@ io.stdout:setvbuf("no")
 
 -- Dependencies
 local Log       = require("log")
-local Common    = require("common")
-local Game      = require("game")
-
 -- Create start up message
 local datetime = os.date("%Y-%m-%d - %H:%M:%S")
 Log.info(string.format("%s %s - %s", _TITLE, _VERSION, datetime))
+
+local Common    = require("common")
+local Game      = require("game")
 
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
