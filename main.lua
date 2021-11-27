@@ -63,7 +63,10 @@ function love.quit()
 end
 
 
--- Error handler
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Error handler --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 local function error_printer(msg, layer)
 	Log.write((debug.traceback("\nError: " .. tostring(msg), 1+(layer or 1)):gsub("\n[^\n]+$", "")))
 end

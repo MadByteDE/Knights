@@ -17,11 +17,11 @@
 
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- template.lua: Template file for Knights: Quest for Gems --
+-- objet.lua: Object file for Knights: Quest for Gems --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-local Template = {}
-Template.__index = Template
+local Object = {}
+Object.__index = Object
 
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,12 +33,14 @@ Template.__index = Template
 -- Constructor --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function Template.new()
-    local self = setmetatable({
-
-    }, Template)
-
-    return self
+function Object.new(x, y)
+    local self = {}
+    self:setPosition(x, y)
+    self:setDimensions()
+    self:setRadius()
+    self:setAngle()
+    self:setOffset()
+    return setmetatable(self, Object)
 end
 
 
@@ -46,11 +48,48 @@ end
 -- Public functions --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function Template:update()
+function Object:setPosition(x, y)
+    self.x = x or self.x or 0
+    self.y = y or self.y or 0
 end
 
-function Template:draw()
+function Object:setRadius(r)
+    self.radius = r or self.radius or 16
+end
+
+function Object:setAngle(angle)
+    self.angle = angle or self.angle or 0
+end
+
+function Object:setOffset(ox, oy)
+    self.ox = ox or self.ox or 0
+    self.oy = oy or self.oy or 0
+end
+
+function Object:setDimensions(w, h)
+    self.width = w or self.width or 16
+    self.height = h or self.height or 16
+end
+
+function Object:drawRectangle(mode, x, y, w, h)
+    local x, y = x or self.x, y or self.y
+    local w, h = w or self.radius, h or self.radius
+    love.graphics.rectangle(mode or "line", x, y, w, h)
+end
+
+function Object:drawCircle(mode, x, y, r)
+    local x, y = x or self.x, y or self.y
+    local r = r or self.radius
+    love.graphics.circle(mode or "line", x, y, r)
+end
+
+function Object:update()
+end
+
+function Object:draw()
+    self:drawRectangle()
+    self:drawCircle()
 end
 
 
-return Template
+return Object
