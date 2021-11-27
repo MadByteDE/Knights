@@ -17,20 +17,42 @@
 
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- Log.lua: Logging tool for Knights: Quest for Gems --
+-- common.lua: common functions for Knights: Quest for Gems --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 local Common = {}
 
 -- Dependencies
-local Log = require("log")
-
 local sformat = string.format
 
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- Public functions --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+function Common.copy(t, to)
+    local to = to or {}
+    for key, value in pairs(t) do
+        to[key] = value
+    end
+    return to
+end
+
+function Common.validate(t, valid_data)
+    local validated_data = t or {}
+    for k, v in pairs(t) do
+        if valid_data[k] then
+            local valuetype = type(v)
+            if valuetype == valid_data[k] then
+                validated_data[k] = v
+            else
+                local str = "Validation failed: Value '%s' is of type '%s', should be '%s'"
+                Log.warn(str, k, valuetype, valid_data[k])
+            end
+        end
+    end
+    return validated_data
+end
 
 function Common.assert(condition, msg, ...)
     msg = sformat(msg or "Assertion failed", ...)
@@ -40,17 +62,14 @@ function Common.assert(condition, msg, ...)
     if not success then
         local output = debug.traceback(ret, 2)
         -- Display the message
-        if Log then Log.write(output)
-        else print(output) end
+        print(output)
         -- Quit the program
         love.event.quit()
     end
     return ret
 end
 
-
 -- https://stackoverflow.com/questions/15706270/sort-a-table-in-lua
-
 function Common.spairs(t, order)
     -- collect the keys
     local keys = {}

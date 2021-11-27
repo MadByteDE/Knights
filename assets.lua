@@ -17,53 +17,54 @@
 
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- game.lua: game state for Knights: Quest for Gems --
+-- Assets.lua: Assets file for Knights: Quest for Gems --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-local Game = {}
+local Assets = {}
+Assets.__index = Assets
 
-local Log       = require("log")
-local Room      = require("room")
-local Json      = require("lib.json")
+local fs = love.filesystem
+
+local Log   = require("log")
+
+love.graphics.setDefaultFilter("nearest", "nearest")
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- Local functions --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-local function readJsonFile(filepath)
-    local file = love.filesystem.newFile(filepath, "r")
-    local data = Json.decode(file:read())
-    file:close()
-    return data
+local function loadImages()
+    local images = {}
+    Log.info("Loading images")
+
+    for _, key in pairs(fs.getDirectoryItems("image")) do
+        if key:match(".png") then
+            Log.debug("Loading image '%s'", key)
+            local image = love.graphics.newImage("image/"..key)
+            local name = key:gsub(".png", "")
+            images[name] = image
+        end
+    end
+    return images
 end
 
+local function loadMobs() end
+
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Constructor --
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+function Assets:init()
+    self.image = loadImages()
+    self.mob = loadMobs()
+end
+
+Assets:init()
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- Public functions --
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function Game:init()
-    --TODO: Need to generate a map instead of using a single room
-    self.room = Room.new(readJsonFile("room/room1.json"))
-end
 
-function Game:update(dt)
-    --TODO: Add animation support
-    self.room:update(dt)
-end
-
-function Game:draw()
-    love.graphics.push()
-    love.graphics.scale(3, 3)
-    self.room:draw()
-    love.graphics.pop()
-end
-
-function Game:keypressed(key)
-    if key == "escape" then love.event.quit() end
-end
-
-function Game:quit()
-end
-
-return Game
+return Assets
